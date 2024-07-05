@@ -50,17 +50,38 @@ const register = async (req, res, next) => {
     const token = await authMiddleware.generateJwtToken(email, next);
     res.status(200).json({ message: "Registered new user.", user, token });
   } catch (error) {
-    return next(createHttpError(400, error));
+    return next(createHttpError(400, "Error in registering user. " + error));
   }
 };
 
-const login = async (req, res) => {
-  res.send("working");
+const login = async (req, res, next) => {
+  const { email, password } = req.body;
+  try {
+    //!CHECKING WHETHER ALL THE REQUIRED FIELDS ARE FILLED
+    if (!email || !password) {
+      return next(createHttpError(400, "Please Enter all fields."));
+    }
+
+    // !CHECKING WHETHER USER EXISIT OR NOT
+    const userAlreadyExists = await User.findOne({ email });
+    if (!userAlreadyExists) {
+      return next(
+        createHttpError(400, "User does not exists. Please Register first.")
+      );
+    }
+    const token = await authMiddleware.generateJwtToken(email, next);
+
+    res.status(200).json({
+      message: "Signed in",
+      user: userAlreadyExists,
+      token,
+    });
+  } catch (error) {
+    return next(createHttpError(400, "Error in signing in user. " + error));
+  }
 };
 
-const logout = async (req, res) => {
-  res.send("successfully logged out.");
-};
+const logout = async (req, res, next) => {};
 module.exports = {
   dummy,
   login,
