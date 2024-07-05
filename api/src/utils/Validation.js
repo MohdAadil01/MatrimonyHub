@@ -17,9 +17,13 @@ const phoneValidation = (phone) => {
   return phoneRegex.test(phone);
 };
 
+const priceValidation = (price) => {
+  return typeof price === 'number' && price > 0;
+};
 module.exports = {
   emailValidation,
   passwordValidation,
   nameValidation,
   phoneValidation,
+  priceValidation,
 };
