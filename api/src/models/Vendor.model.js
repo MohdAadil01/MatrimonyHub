@@ -15,9 +15,6 @@ const VendorSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service",
     },
-    rating: {
-      type: String,
-    },
   },
   { timestamps: true }
 );

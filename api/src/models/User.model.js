@@ -33,22 +33,6 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-UserSchema.pre("validate", async (next) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (this.email && !emailRegex.test(this.email)) {
-    this.invalidate("email", "Invalid email format.");
-  }
-  next();
-});
-
-UserSchema.pre("save", async (next) => {
-  if (this.isModified("password")) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-  next();
-});
-
 const User = mongoose.model("User", UserSchema);
 
 module.exports = User;

@@ -1,6 +1,7 @@
 const createHttpError = require("http-errors");
-const { FieldValidator } = require("../utils");
 
+const { FieldValidator } = require("../utils");
+const { authMiddleware } = require("../middlewares");
 const { User } = require("../models");
 
 const dummy = (req, res) => {
@@ -46,7 +47,8 @@ const register = async (req, res, next) => {
       phone,
     });
     await user.save();
-    res.status(200).json({ message: "Registered new user.", user });
+    const token = await authMiddleware.generateJwtToken(email, next);
+    res.status(200).json({ message: "Registered new user.", user, token });
   } catch (error) {
     return next(createHttpError(400, error));
   }
