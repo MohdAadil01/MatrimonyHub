@@ -4,14 +4,13 @@ const { FieldValidator } = require("../utils");
 const { authMiddleware } = require("../middlewares");
 const { User } = require("../models");
 const { Service } = require("../models");
-const {Vendor} = require("../models");
-
+const { Vendor } = require("../models");
 
 const dummy = (req, res) => {
   res.send("Working route on the above url");
 };
 
-/************** USER CONTROLS****************/
+/****************USER CONTROLS****************/
 
 // fetch all users by admin
 const fetchAllUsers = async (req, res, next) => {
@@ -125,16 +124,15 @@ const deleteUserByAdmin = async (req, res, next) => {
   }
 };
 
-
-
-/************** SERVICES CONTROLS****************/
-
+/**************SERVICES CONTROLS****************/
 
 // Fetch all services
 const fetchAllServices = async (req, res, next) => {
   try {
-    const services = await Service.find().populate('vendor_id', 'name');
-    res.status(200).json({ message: "All services fetched successfully.", services });
+    const services = await Service.find().populate("vendor_id", "name");
+    res
+      .status(200)
+      .json({ message: "All services fetched successfully.", services });
   } catch (error) {
     return next(createHttpError(500, "Error in fetching services. " + error));
   }
@@ -191,16 +189,30 @@ const createServiceByAdmin = async (req, res, next) => {
   }
 };
 
-
-
 // Update a service by admin
 const updateServiceByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  const { vendor_id, title, description, price, availability, serviceType, imageUrl } = req.body;
-  
+  const {
+    vendor_id,
+    title,
+    description,
+    price,
+    availability,
+    serviceType,
+    imageUrl,
+  } = req.body;
+
   try {
     // Check if all fields are provided
-    if (!vendor_id || !title || !description || !price || !availability || !serviceType || !imageUrl) {
+    if (
+      !vendor_id ||
+      !title ||
+      !description ||
+      !price ||
+      !availability ||
+      !serviceType ||
+      !imageUrl
+    ) {
       return next(createHttpError(400, "Please enter all fields."));
     }
 
@@ -232,14 +244,16 @@ const updateServiceByAdmin = async (req, res, next) => {
     await service.save();
     res.status(200).json({ message: "Service updated by admin.", service });
   } catch (error) {
-    return next(createHttpError(400, "Error in updating service by admin. " + error));
+    return next(
+      createHttpError(400, "Error in updating service by admin. " + error)
+    );
   }
 };
 
 // Delete a service by admin
 const deleteServiceByAdmin = async (req, res, next) => {
   const { id } = req.params;
-  
+
   try {
     const service = await Service.findByIdAndDelete(id);
     if (!service) {
@@ -250,6 +264,7 @@ const deleteServiceByAdmin = async (req, res, next) => {
     return next(createHttpError(500, "Error in deleting service. " + error));
   }
 };
+
 module.exports = {
   dummy,
   fetchAllUsers,

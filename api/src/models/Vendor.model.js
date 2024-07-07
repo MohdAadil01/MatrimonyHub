@@ -1,19 +1,56 @@
 const mongoose = require("mongoose");
-const User = require("./User.model");
-const Service = require("./Service.model");
 
 const VendorSchema = new mongoose.Schema(
   {
-    user_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-    },
-    website: {
+    business_name: {
       type: String,
+      required: true,
     },
-    service: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Service",
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    phone: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
+    services: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Service",
+      },
+    ],
+    portfolio: {
+      type: [String],
+    },
+    availability: {
+      type: String,
+      enum: ["available", "booked"],
+      default: "available",
+    },
+    ratings: {
+      type: Number,
+      required: false,
+      default: 0.0,
+    },
+    reviews: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+    earnings: {
+      type: Number,
+      default: 0.0,
     },
   },
   { timestamps: true }

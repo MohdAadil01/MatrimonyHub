@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
-const Vendor = require("./Vendor.model");
 
 const ServiceSchema = new mongoose.Schema(
   {
-    vendor_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Vendor",
-    },
+    vendors: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Vendor",
+      },
+    ],
     title: {
       type: String,
       required: true,
@@ -25,15 +26,17 @@ const ServiceSchema = new mongoose.Schema(
       default: "available",
       required: true,
     },
+    ratings: {
+      type: Number,
+      required: false,
+      default: 0.0,
+    },
     serviceType: {
       type: String,
-      enum: ["catering", "photography", "florist"],
+      enum: ["catering", "photography", "florist", "band"],
       required: true,
     },
-    imageUrl: {
-      type: String,
-      required: true,
-    },
+    previousWork: [{ type: String }],
   },
   { timestamps: true }
 );

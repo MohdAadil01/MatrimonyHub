@@ -1,28 +1,21 @@
 const mongoose = require("mongoose");
-const User = require("./User.model");
-const Service = require("./Service.model");
-const Vendor = require("./Vendor.model");
 
 const ReviewSchema = new mongoose.Schema(
   {
-    user_id: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    service_id: {
+    serviceId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Service",
       required: false,
     },
-    vendor_id: {
+    vendorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Vendor",
       required: false,
-    },
-    title: {
-      type: String,
-      required: true,
     },
     rating: {
       type: Number,
@@ -30,13 +23,20 @@ const ReviewSchema = new mongoose.Schema(
       min: 1,
       max: 5,
     },
-    reviewText: {
+    comment: {
       type: String,
-      required: true,
     },
-    recommendation: {
-      type: Boolean, 
-    },
+    comments: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+        },
+        comment: {
+          type: String,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

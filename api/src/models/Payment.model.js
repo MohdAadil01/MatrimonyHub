@@ -4,12 +4,12 @@ const Booking = require("./Booking.model");
 
 const PaymentSchema = new mongoose.Schema(
   {
-    user_id: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    booking_id: {
+    bookingId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Booking",
       required: true,
@@ -37,6 +37,7 @@ const PaymentSchema = new mongoose.Schema(
     transactionDate: {
       type: Date,
       required: true,
+      default: Date.now,
     },
     transactionId: {
       type: String,
