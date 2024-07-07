@@ -2,23 +2,19 @@ const createHttpError = require("http-errors");
 const path = require("path");
 
 const { FieldValidator } = require("../../utils");
-const { UploadToCloud } = require("../../utils");
 const { authMiddleware } = require("../../middlewares");
 const { User } = require("../../models");
+const { processAndUploadFile } = require("../../utils");
 
 const dummy = async (req, res) => {
   try {
-    let filePath;
-    let uploadResult = [];
+    // !FOR UPLOADING SINGLE FILE
+    // const uploadResult = await processAndUploadFile.uploadSingleFile(req.file);
 
-    for (const file of req.files) {
-      filePath = path.resolve(__dirname, "../../../uploads/" + file.filename);
-
-      const fileName = file.originalname;
-      const result = await UploadToCloud(filePath, fileName);
-
-      uploadResult.push(result);
-    }
+    // !FOR UPLOADING MULTIPLES FILES
+    const uploadResult = await processAndUploadFile.uploadMultipleFiles(
+      req.files
+    );
     res.send(uploadResult);
   } catch (error) {
     console.error("Error in dummy function:", error);

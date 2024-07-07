@@ -1,5 +1,6 @@
 const { cloudinary } = require("../config");
 const fs = require("fs");
+const path = require("path");
 
 const UploadToCloud = async (filePath, fileName) => {
   try {
@@ -23,4 +24,31 @@ const UploadToCloud = async (filePath, fileName) => {
   }
 };
 
-module.exports = UploadToCloud;
+const uploadMultipleFiles = async (files) => {
+  const uploadResults = [];
+
+  for (const file of files) {
+    const filePath = path.resolve(__dirname, "../../uploads/" + file.filename);
+    const fileName = file.originalname;
+
+    const result = await UploadToCloud(filePath, fileName);
+
+    uploadResults.push(result);
+  }
+
+  return uploadResults;
+};
+
+const uploadSingleFile = async (file) => {
+  const filePath = path.resolve(__dirname, "../../uploads/" + file.filename);
+  const fileName = file.originalname;
+
+  const result = await UploadToCloud(filePath, fileName);
+
+  return result;
+};
+
+module.exports = {
+  uploadMultipleFiles,
+  uploadSingleFile,
+};

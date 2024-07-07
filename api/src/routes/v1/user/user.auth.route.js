@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.post(
   "/dummy",
+  //   upload.single("files"),
   upload.array("files"),
   userController.userAuthController.dummy
 );
