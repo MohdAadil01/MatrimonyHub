@@ -32,7 +32,7 @@ const UserSchema = new mongoose.Schema(
         ref: "Review",
       },
     ],
-    wishlist: [
+    bookings: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Booking",

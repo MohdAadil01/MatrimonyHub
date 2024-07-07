@@ -7,9 +7,9 @@ const passwordValidation = (password) => {
   return password.length >= 6;
 };
 
-const nameValidation = (firstName, lastName) => {
+const nameValidation = (name) => {
   const nameRegex = /^[A-Za-z]+$/;
-  return nameRegex.test(firstName) && nameRegex.test(lastName);
+  return nameRegex.test(name);
 };
 
 const phoneValidation = (phone) => {
@@ -18,8 +18,9 @@ const phoneValidation = (phone) => {
 };
 
 const priceValidation = (price) => {
-  return typeof price === 'number' && price > 0;
+  return typeof price === "number" && price > 0;
 };
+
 module.exports = {
   emailValidation,
   passwordValidation,

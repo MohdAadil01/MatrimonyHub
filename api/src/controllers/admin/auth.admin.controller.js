@@ -1,10 +1,10 @@
 const createHttpError = require("http-errors");
 
-const { FieldValidator } = require("../utils");
-const { authMiddleware } = require("../middlewares");
-const { User } = require("../models");
-const { Service } = require("../models");
-const { Vendor } = require("../models");
+const { FieldValidator } = require("../../utils");
+const { authMiddleware } = require("../../middlewares");
+const { User } = require("../../models");
+const { Service } = require("../../models");
+const { Vendor } = require("../../models");
 
 const dummy = (req, res) => {
   res.send("Working route on the above url");

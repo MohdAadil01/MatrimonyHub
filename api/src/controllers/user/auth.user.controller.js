@@ -1,18 +1,18 @@
 const createHttpError = require("http-errors");
 
-const { FieldValidator } = require("../utils");
-const { authMiddleware } = require("../middlewares");
-const { User } = require("../models");
+const { FieldValidator } = require("../../utils");
+const { authMiddleware } = require("../../middlewares");
+const { User } = require("../../models");
 
 const dummy = (req, res) => {
   res.send("Working route on the above url");
 };
 
 const register = async (req, res, next) => {
-  const { email, password, firstName, lastName, phone } = req.body;
+  const { email, password, name, phone } = req.body;
   try {
     //!CHECKING WHETHER ALL THE REQUIRED FIELDS ARE FILLED
-    if (!email || !password || !firstName || !lastName || !phone) {
+    if (!email || !password || !name || !phone) {
       return next(createHttpError(400, "Please Enter all fields."));
     }
 
@@ -25,7 +25,7 @@ const register = async (req, res, next) => {
         createHttpError(500, "Password must be more than 6 character.")
       );
     }
-    if (!FieldValidator.nameValidation(firstName, lastName)) {
+    if (!FieldValidator.nameValidation(name)) {
       return next(createHttpError(500, "Enter valid Name."));
     }
     if (!FieldValidator.phoneValidation(phone)) {
@@ -42,8 +42,7 @@ const register = async (req, res, next) => {
     const user = await User({
       email,
       password,
-      firstName,
-      lastName,
+      name,
       phone,
     });
     await user.save();
@@ -83,8 +82,8 @@ const login = async (req, res, next) => {
 
 const logout = async (req, res, next) => {};
 module.exports = {
-  dummy,
   login,
   logout,
   register,
+  dummy,
 };
