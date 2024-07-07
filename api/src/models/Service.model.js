@@ -2,12 +2,11 @@ const mongoose = require("mongoose");
 
 const ServiceSchema = new mongoose.Schema(
   {
-    vendors: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Vendor",
-      },
-    ],
+    vendor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Vendor",
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -28,7 +27,6 @@ const ServiceSchema = new mongoose.Schema(
     },
     ratings: {
       type: Number,
-      required: false,
       default: 0.0,
     },
     serviceType: {
