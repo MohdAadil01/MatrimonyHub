@@ -1,11 +1,29 @@
 const createHttpError = require("http-errors");
+const path = require("path");
 
 const { FieldValidator } = require("../../utils");
+const { UploadToCloud } = require("../../utils");
 const { authMiddleware } = require("../../middlewares");
 const { User } = require("../../models");
 
-const dummy = (req, res) => {
-  res.send("Working route on the above url");
+const dummy = async (req, res) => {
+  try {
+    let filePath;
+    let uploadResult = [];
+
+    for (const file of req.files) {
+      filePath = path.resolve(__dirname, "../../../uploads/" + file.filename);
+
+      const fileName = file.originalname;
+      const result = await UploadToCloud(filePath, fileName);
+
+      uploadResult.push(result);
+    }
+    res.send(uploadResult);
+  } catch (error) {
+    console.error("Error in dummy function:", error);
+    res.status(500).send("An error occurred while processing the file.");
+  }
 };
 
 const register = async (req, res, next) => {
