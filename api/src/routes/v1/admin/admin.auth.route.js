@@ -1,10 +1,20 @@
 const express = require("express");
 const { adminController } = require("../../../controllers");
+const { verifyJwtToken } = require("../../../middlewares/auth.middleware");
 
 const router = express.Router();
 
 router.get("/dummy", adminController.adminAuthController.dummy);
-router.get("/getAllUsers", adminController.adminAuthController.fetchAllUsers);
+router.post("/login", adminController.adminAuthController.loginAdmin);
+router.post("/register", adminController.adminAuthController.registerAdmin);
+router.get("/getusers", verifyJwtToken, adminController.adminAuthController.fetchAllUsers);
+router.get("/getVendors", verifyJwtToken, adminController.adminAuthController.fetchAllVendors);
+router.post("/addvendors", verifyJwtToken, adminController.adminAuthController.addVendors);
+router.delete(
+  "/deletevendor/:id", verifyJwtToken,
+  adminController.adminAuthController.removeVendor
+);
+
 router.post(
   "/createUser",
   adminController.adminAuthController.createUserByAdmin

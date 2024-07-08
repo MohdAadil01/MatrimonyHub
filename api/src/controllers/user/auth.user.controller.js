@@ -81,6 +81,8 @@ const login = async (req, res, next) => {
       return next(
         createHttpError(400, "User does not exists. Please Register first.")
       );
+    }else{
+      
     }
     const token = await authMiddleware.generateJwtToken(email, next);
 

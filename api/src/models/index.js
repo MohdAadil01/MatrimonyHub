@@ -3,3 +3,5 @@ module.exports.Booking = require("./Booking.model");
 module.exports.Review = require("./Review.model");
 module.exports.Service = require("./Service.model");
 module.exports.Vendor = require("./Vendor.model");
+module.exports.Admin = require("./Admin.model");
+module.exports.Cart = require("./Cart.model");

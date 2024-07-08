@@ -177,10 +177,10 @@
 | **Functionality** | **Description** | **Corresponding API Endpoints** |
 | --- | --- | --- |
 | **Admin Login** | Admin can log in to the website. | \- POST /api/admin/login |
-| **View All Users** | Admin can view all registered users. | \- GET /api/admin/users |
-| **View All Vendors** | Admin can view all registered vendors. | \- GET /api/admin/vendors |
-| **Add Vendor** | Admin can add a new vendor to the platform. | \- POST /api/admin/vendors |
-| **Remove Vendor** | Admin can remove an existing vendor from the platform. | \- DELETE /api/admin/vendors/{vendor_id} |
+| **View All Users** | Admin can view all registered users. | \- GET /api/admin/getusers |
+| **View All Vendors** | Admin can view all registered vendors. | \- GET /api/admin/getvendors |
+| **Add New Vendor** | Admin can add a new vendor to the platform. | \- POST /api/admin/addvendors |
+| **Remove Vendor** | Admin can remove an existing vendor from the platform. | \- DELETE /api/admin/deletevendor/{vendor_id} |
 | **Manage Vendor Services** | Admin can add, update, and delete vendor services. | \- POST /api/admin/vendors/{vendor_id}/services&lt;br&gt;- PUT /api/admin/vendors/{vendor_id}/services/{service_id}&lt;br&gt;- DELETE /api/admin/vendors/{vendor_id}/services/{service_id} |
 | **View User Reviews for Vendors** | Admin can view all user reviews for any vendor. | \- GET /api/admin/vendors/{vendor_id}/reviews |
 | **Manage Bookings** | Admin can view, update, and delete bookings. | \- GET /api/admin/bookings&lt;br&gt;- PUT /api/admin/bookings/{booking_id}&lt;br&gt;- DELETE /api/admin/bookings/{booking_id} |
