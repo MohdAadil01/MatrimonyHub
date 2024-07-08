@@ -10,7 +10,7 @@ const defaultRoutes = [
     route: userAuthRoute,
   },
   {
-    path: "/vendor",
+    path: "/vendor/auth",
     route: vendorAuthRoute,
   },
   {
