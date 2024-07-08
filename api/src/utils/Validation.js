@@ -13,8 +13,13 @@ const nameValidation = (name) => {
 };
 
 const phoneValidation = (phone) => {
-  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
-  return phoneRegex.test(phone);
+  const phoneRegex = /^\d{10}$/;
+
+  if (typeof phone === "string" && phoneRegex.test(phone)) {
+    return true;
+  } else {
+    return false;
+  }
 };
 
 const priceValidation = (price) => {
