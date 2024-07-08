@@ -16,14 +16,18 @@ const verifyJwtToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization || req.headers.Authorization;
     if (!authHeader) {
-      return next(500, "Please login/signup first.");
+      // console.log("No token found");
+      return next(createHttpError(400, "Please login/signup first."));
     }
     const token = authHeader.split(" ")[1];
     const decodedData = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decodedData.user;
     next();
   } catch (error) {
-    return next(createHttpError(500, "Error in verifying jwt token."));
+    console.log(`Error`, error.message);
+    return next(
+      createHttpError(500, "Error in verifying jwt token:", error.message)
+    );
   }
 };
 
