@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const VendorSchema = new mongoose.Schema(
   {
-    business_name: {
+    businessName: {
       type: String,
       required: true,
     },
@@ -29,19 +29,14 @@ const VendorSchema = new mongoose.Schema(
         ref: "Service",
       },
     ],
-    portfolio: {
-      type: [String],
-    },
-    availability: {
-      type: String,
-      enum: ["available", "booked"],
-      default: "available",
-    },
-    ratings: {
-      type: Number,
-      required: false,
-      default: 0.0,
-    },
+    portfolio: [
+      {
+        public_id: { type: String },
+        url: { type: String },
+        secure_url: { type: String },
+        format: { type: String },
+      },
+    ],
     reviews: [
       {
         type: mongoose.Schema.Types.ObjectId,
