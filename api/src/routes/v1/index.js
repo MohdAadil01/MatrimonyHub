@@ -4,7 +4,11 @@ const { userAuthRoute } = require("./user");
 // !VENDORS ROUTES
 const { vendorAuthRoute, vendorProfileRoute } = require("./vendor");
 // !ADMING ROUTES
-const { adminAuthRoute, adminUserfunctionRoute, adminVendorfunctionRoute } = require("./admin");
+const {
+  adminAuthRoute,
+  adminUserfunctionRoute,
+  adminVendorfunctionRoute,
+} = require("./admin");
 const router = express.Router();
 
 const defaultRoutes = [
@@ -31,7 +35,7 @@ const defaultRoutes = [
   {
     path: "/admin/vendors",
     route: adminVendorfunctionRoute,
-  }
+  },
 ];
 
 defaultRoutes.forEach((route) => {
