@@ -1,1 +1,2 @@
-module.exports.vendorAuthRoute = require("./vendor.auth.route");
+module.exports.vendorAuthRoute = require("./auth.vendor.route");
+module.exports.vendorProfileRoute = require("./profile.vendor.route");
