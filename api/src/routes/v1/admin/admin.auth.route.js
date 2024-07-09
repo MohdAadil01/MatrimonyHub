@@ -7,13 +7,9 @@ const router = express.Router();
 router.get("/dummy", adminController.adminAuthController.dummy);
 router.post("/login", adminController.adminAuthController.loginAdmin);
 router.post("/register", adminController.adminAuthController.registerAdmin);
-router.get("/getusers", verifyJwtToken, adminController.adminAuthController.fetchAllUsers);
-router.get("/getVendors", verifyJwtToken, adminController.adminAuthController.fetchAllVendors);
-router.post("/addvendors", verifyJwtToken, adminController.adminAuthController.addVendors);
-router.delete(
-  "/deletevendor/:id", verifyJwtToken,
-  adminController.adminAuthController.removeVendor
-);
+
+/*** 
+
 
 router.post(
   "/createUser",
@@ -44,5 +40,5 @@ router.delete(
   "/deleteService/:id",
   adminController.adminAuthController.deleteServiceByAdmin
 );
-
+*/
 module.exports = router;
