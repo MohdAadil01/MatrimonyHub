@@ -1,8 +1,14 @@
 const express = require("express");
 // !USER ROUTES
 const { userAuthRoute, userProfileRoute } = require("./user");
+
 // !VENDORS ROUTES
-const { vendorAuthRoute, vendorProfileRoute } = require("./vendor");
+const {
+  vendorAuthRoute,
+  vendorProfileRoute,
+  vendorServiceRoute,
+} = require("./vendor");
+
 // !ADMING ROUTES
 const {
   adminAuthRoute,
@@ -12,6 +18,7 @@ const {
 const router = express.Router();
 
 const defaultRoutes = [
+  // !USER ROUTES STARTS HERE
   {
     path: "/auth",
     route: userAuthRoute,
@@ -20,6 +27,8 @@ const defaultRoutes = [
     path: "/user",
     route: userProfileRoute,
   },
+
+  // !VENDOR ROUTES STARTS HERE
   {
     path: "/vendor/auth",
     route: vendorAuthRoute,
@@ -28,6 +37,11 @@ const defaultRoutes = [
     path: "/vendor/profile",
     route: vendorProfileRoute,
   },
+  {
+    path: "/vendor/service",
+    route: vendorServiceRoute,
+  },
+  // !ADMIN ROUTES STARTS HERE
   {
     path: "/admin/auth",
     route: adminAuthRoute,
