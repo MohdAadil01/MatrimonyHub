@@ -34,7 +34,11 @@ const ServiceSchema = new mongoose.Schema(
       enum: ["catering", "photography", "florist", "band"],
       required: true,
     },
-    previousWork: [{ type: String }],
+    images: [
+      {
+        type: String,
+      },
+    ],
   },
   { timestamps: true }
 );
