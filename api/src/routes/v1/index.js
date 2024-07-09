@@ -1,6 +1,6 @@
 const express = require("express");
 // !USER ROUTES
-const { userAuthRoute } = require("./user");
+const { userAuthRoute, userProfileRoute } = require("./user");
 // !VENDORS ROUTES
 const { vendorAuthRoute, vendorProfileRoute } = require("./vendor");
 // !ADMING ROUTES
@@ -15,6 +15,10 @@ const defaultRoutes = [
   {
     path: "/auth",
     route: userAuthRoute,
+  },
+  {
+    path: "/user",
+    route: userProfileRoute,
   },
   {
     path: "/vendor/auth",

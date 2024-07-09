@@ -16,7 +16,6 @@ const verifyJwtToken = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization || req.headers.Authorization;
     if (!authHeader) {
-      // console.log("No token found");
       return next(createHttpError(400, "Please login/signup first."));
     }
     const token = authHeader.split(" ")[1];
