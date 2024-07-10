@@ -5,16 +5,14 @@ const { upload } = require("../../../middlewares");
 
 const router = express.Router();
 
-router.get("/dummy", vendorServiceController.dummy);
+router.post("/:uid/add", upload.array("files"), vendorServiceController.add);
 
-router.post("/:id/add", upload.array("files"), vendorServiceController.add);
+router.get("/:uid/all", vendorServiceController.getAll);
+router.get("/:uid/:sid", vendorServiceController.getOne);
 
-router.get("/:id/all", vendorServiceController.getAll);
-router.get("/:id/:sId", vendorServiceController.getOne);
+router.put("/:uid/:sid", upload.array("files"), vendorServiceController.update);
 
-router.put("/:id/:sId", upload.array("files"), vendorServiceController.update);
-
-router.delete("/:id/all", vendorServiceController.deleteAll);
-router.delete("/:id/:sId", vendorServiceController.deleteOne);
+router.delete("/:uid/all", vendorServiceController.deleteAll);
+router.delete("/:uid/:sid", vendorServiceController.deleteOne);
 
 module.exports = router;
