@@ -62,12 +62,83 @@ const add = async (req, res, next) => {
   }
 };
 
+// !GET SINGLE SERVICE
 const getOne = async (req, res, next) => {
-  res.send("add");
+  const { id, sId } = req.params;
+
+  if (
+    !mongoose.Types.ObjectId.isValid(id) ||
+    !mongoose.Types.ObjectId.isValid(sId)
+  ) {
+    return next(createHttpError(400, "Invalid id."));
+  }
+
+  let vendor;
+  let service;
+
+  try {
+    vendor = await Vendor.findById(id);
+    if (!vendor) {
+      return next(
+        createHttpError(404, "Unable to find vendor with the given id.")
+      );
+    }
+
+    service = await Service.findById(sId);
+    if (!service) {
+      return next(
+        createHttpError(404, "Unable to find service with the given id.")
+      );
+    }
+
+    if (String(vendor._id) !== String(service.vendor)) {
+      return next(createHttpError(403, "Unauthorized."));
+    }
+
+    res.status(200).json({
+      message: "Found Service",
+      service,
+    });
+  } catch (error) {
+    return next(
+      createHttpError(
+        500,
+        "Error while finding user and service. " + error.message
+      )
+    );
+  }
 };
+
 const getAll = async (req, res, next) => {
-  res.send("see all");
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return next(createHttpError(400, "Invalid id."));
+  }
+
+  try {
+    const vendor = await Vendor.findById(id);
+    if (!vendor) {
+      return next(
+        createHttpError(404, "Unable to find vendor with the given id.")
+      );
+    }
+
+    const services = await Service.find({ vendor: id });
+    res.status(200).json({
+      message: "Success",
+      services,
+    });
+  } catch (error) {
+    return next(
+      createHttpError(
+        500,
+        "Error while finding the services for the vendor. " + error.message
+      )
+    );
+  }
 };
+
 const update = async (req, res, next) => {
   res.send("add");
 };
@@ -78,4 +149,4 @@ const deleteAll = async (req, res, next) => {
   res.send("add");
 };
 
-module.exports = { dummy, add };
+module.exports = { dummy, add, getOne, getAll, update, deleteOne, deleteAll };
