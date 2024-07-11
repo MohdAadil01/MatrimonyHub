@@ -7,6 +7,7 @@ const {
   vendorAuthRoute,
   vendorProfileRoute,
   vendorServiceRoute,
+  vendorPortfolioRoute,
 } = require("./vendor");
 
 // !ADMING ROUTES
@@ -15,6 +16,7 @@ const {
   adminUserfunctionRoute,
   adminVendorfunctionRoute,
 } = require("./admin");
+const { path } = require("./vendor/portfolio.vendor.route");
 const router = express.Router();
 
 const defaultRoutes = [
@@ -40,6 +42,10 @@ const defaultRoutes = [
   {
     path: "/vendor/service",
     route: vendorServiceRoute,
+  },
+  {
+    path: "/vendor/portfolio",
+    route: vendorPortfolioRoute,
   },
   // !ADMIN ROUTES STARTS HERE
   {

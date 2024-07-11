@@ -1,18 +1,26 @@
 const express = require("express");
 
-const { vendorServiceController } = require("../../../controllers/vendor");
+const { vendorController } = require("../../../controllers");
 const { upload } = require("../../../middlewares");
 
 const router = express.Router();
 
-router.post("/:uid/add", upload.array("files"), vendorServiceController.add);
+router.post(
+  "/:uid/add",
+  upload.array("files"),
+  vendorController.vendorServiceController.add
+);
 
-router.get("/:uid/all", vendorServiceController.getAll);
-router.get("/:uid/:sid", vendorServiceController.getOne);
+router.get("/:uid/all", vendorController.vendorServiceController.getAll);
+router.get("/:uid/:sid", vendorController.vendorServiceController.getOne);
 
-router.put("/:uid/:sid", upload.array("files"), vendorServiceController.update);
+router.put(
+  "/:uid/:sid",
+  upload.array("files"),
+  vendorController.vendorServiceController.update
+);
 
-router.delete("/:uid/all", vendorServiceController.deleteAll);
-router.delete("/:uid/:sid", vendorServiceController.deleteOne);
+router.delete("/:uid/all", vendorController.vendorServiceController.deleteAll);
+router.delete("/:uid/:sid", vendorController.vendorServiceController.deleteOne);
 
 module.exports = router;

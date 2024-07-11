@@ -1,14 +1,10 @@
 const createHttpError = require("http-errors");
 const { Vendor } = require("../../models");
 
-const dummy = (req, res) => {
-  res.send("working");
-};
-
 const view = async (req, res, next) => {
-  const { id } = req.params;
+  const { uid } = req.params;
   try {
-    const vendor = await Vendor.findById(id);
+    const vendor = await Vendor.findById(uid);
     if (!vendor) {
       return next(
         createHttpError(404, "Unable to find vendor with the given id")
@@ -26,11 +22,11 @@ const view = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { id } = req.params;
+  const { uid } = req.params;
   const { businessName, email, phone, password, address } = req.body;
   let vendor;
   try {
-    vendor = await Vendor.findById(id);
+    vendor = await Vendor.findById(uid);
     if (!vendor) {
       return next(
         createHttpError(404, "Vendor does not exist with the given id")
@@ -41,7 +37,7 @@ const update = async (req, res, next) => {
   }
   try {
     vendor = await Vendor.findByIdAndUpdate(
-      id,
+      uid,
       {
         businessName,
         email,
@@ -63,9 +59,9 @@ const update = async (req, res, next) => {
 };
 
 const remove = async (req, res, next) => {
-  const { id } = req.params;
+  const { uid } = req.params;
   try {
-    const vendor = await Vendor.findById(id);
+    const vendor = await Vendor.findById(uid);
     if (!vendor) {
       return next(
         createHttpError(404, "Vendor does not exist with the given id.")
@@ -82,4 +78,4 @@ const remove = async (req, res, next) => {
   }
 };
 
-module.exports = { dummy, view, update, remove };
+module.exports = { view, update, remove };
