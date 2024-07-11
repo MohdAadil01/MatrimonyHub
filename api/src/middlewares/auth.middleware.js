@@ -1,10 +1,10 @@
 const createHttpError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
-const generateJwtToken = async (email, next) => {
+const generateJwtToken = async (_id, next) => {
   try {
-    const token = jwt.sign({ user: email }, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRES_IN,
+    const token = jwt.sign({ user: _id }, process.env.JWT_SECRET, {
+      // expiresIn: process.env.JWT_EXPIRES_IN,
     });
     return token;
   } catch (error) {
