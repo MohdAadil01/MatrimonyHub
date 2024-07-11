@@ -8,6 +8,7 @@ const {
   vendorProfileRoute,
   vendorServiceRoute,
   vendorPortfolioRoute,
+  vendorBookingRoute,
 } = require("./vendor");
 
 // !ADMING ROUTES
@@ -46,6 +47,10 @@ const defaultRoutes = [
   {
     path: "/vendor/portfolio",
     route: vendorPortfolioRoute,
+  },
+  {
+    path: "/vendor/booking",
+    route: vendorBookingRoute,
   },
   // !ADMIN ROUTES STARTS HERE
   {
