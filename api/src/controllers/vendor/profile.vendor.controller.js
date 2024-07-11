@@ -2,7 +2,7 @@ const createHttpError = require("http-errors");
 const { Vendor } = require("../../models");
 
 const view = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
   try {
     const vendor = await Vendor.findById(uid);
     if (!vendor) {
@@ -22,7 +22,7 @@ const view = async (req, res, next) => {
 };
 
 const update = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
   const { businessName, email, phone, password, address } = req.body;
   let vendor;
   try {
@@ -59,7 +59,7 @@ const update = async (req, res, next) => {
 };
 
 const remove = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
   try {
     const vendor = await Vendor.findById(uid);
     if (!vendor) {

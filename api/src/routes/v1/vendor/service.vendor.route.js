@@ -1,26 +1,44 @@
 const express = require("express");
 
 const { vendorController } = require("../../../controllers");
-const { upload } = require("../../../middlewares");
+const { upload, authMiddleware } = require("../../../middlewares");
 
 const router = express.Router();
 
 router.post(
-  "/:uid/add",
+  "/add",
+  authMiddleware.verifyJwtToken,
   upload.array("files"),
   vendorController.vendorServiceController.add
 );
 
-router.get("/:uid/all", vendorController.vendorServiceController.getAll);
-router.get("/:uid/:sid", vendorController.vendorServiceController.getOne);
+router.get(
+  "/all",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorServiceController.getAll
+);
+router.get(
+  "/:sid",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorServiceController.getOne
+);
 
 router.put(
-  "/:uid/:sid",
+  "/:sid",
+  authMiddleware.verifyJwtToken,
   upload.array("files"),
   vendorController.vendorServiceController.update
 );
 
-router.delete("/:uid/all", vendorController.vendorServiceController.deleteAll);
-router.delete("/:uid/:sid", vendorController.vendorServiceController.deleteOne);
+router.delete(
+  "/all",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorServiceController.deleteAll
+);
+router.delete(
+  "/:sid",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorServiceController.deleteOne
+);
 
 module.exports = router;

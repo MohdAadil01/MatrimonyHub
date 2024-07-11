@@ -5,7 +5,7 @@ const { default: mongoose } = require("mongoose");
 
 // !ADD NEW SERVICE
 const add = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
   const { title, description, price, availability, serviceType } = req.body;
   if (!title || !description || !price || !availability || !serviceType) {
     return next(createHttpError(400, "All fields are required."));
@@ -60,7 +60,8 @@ const add = async (req, res, next) => {
 
 // !GET SINGLE SERVICE
 const getOne = async (req, res, next) => {
-  const { uid, sid } = req.params;
+  const { user: uid } = req;
+  const { sid } = req.params;
 
   if (
     !mongoose.Types.ObjectId.isValid(uid) ||
@@ -107,7 +108,7 @@ const getOne = async (req, res, next) => {
 
 // !GET ALL SERVICE
 const getAll = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
 
   if (!mongoose.Types.ObjectId.isValid(uid)) {
     return next(createHttpError(400, "Invalid id."));
@@ -138,7 +139,8 @@ const getAll = async (req, res, next) => {
 
 // !UPDATE SERVICE
 const update = async (req, res, next) => {
-  const { uid, sid } = req.params;
+  const { user: uid } = req;
+  const { sid } = req.params;
   const { title, description, price, availability, serviceType } = req.body;
 
   if (
@@ -212,7 +214,9 @@ const update = async (req, res, next) => {
 
 // !DELETE SINGLE SERVICE
 const deleteOne = async (req, res, next) => {
-  const { uid, sid } = req.params;
+  const { user: uid } = req;
+
+  const { sid } = req.params;
   if (
     !mongoose.Types.ObjectId.isValid(uid) ||
     !mongoose.Types.ObjectId.isValid(sid)
@@ -262,7 +266,7 @@ const deleteOne = async (req, res, next) => {
 
 // !DELETE ALL SERVICE
 const deleteAll = async (req, res, next) => {
-  const { uid } = req.params;
+  const { user: uid } = req;
   if (!mongoose.Types.ObjectId.isValid(uid)) {
     return next(createHttpError(400, "Invalid id"));
   }
@@ -296,7 +300,8 @@ const deleteAll = async (req, res, next) => {
 
 // !TO BE MODIFIED LATER
 const deleteImage = async (req, res, next) => {
-  const { uid, sid } = req.params;
+  const { user: uid } = req;
+  const { sid } = req.params;
   const { imageUrl } = req.body;
 
   if (
