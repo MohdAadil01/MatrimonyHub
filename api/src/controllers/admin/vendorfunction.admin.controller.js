@@ -1,7 +1,5 @@
 const createHttpError = require("http-errors");
 
-
-
 const { Vendor } = require("../../models");
 
 const { Service } = require("../../models");

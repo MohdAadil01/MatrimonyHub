@@ -14,6 +14,8 @@ const {
   adminAuthRoute,
   adminUserfunctionRoute,
   adminVendorfunctionRoute,
+  adminReviewsfunctionRoute,
+  adminBookingfunctionRoute,
 } = require("./admin");
 const router = express.Router();
 
@@ -53,6 +55,14 @@ const defaultRoutes = [
   {
     path: "/admin/vendors",
     route: adminVendorfunctionRoute,
+  },
+  {
+    path: "/admin/reviews",
+    route: adminReviewsfunctionRoute,
+  },
+  {
+    path: "/admin/booking",
+    route: adminBookingfunctionRoute,
   },
 ];
 
