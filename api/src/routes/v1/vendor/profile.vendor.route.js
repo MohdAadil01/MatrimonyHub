@@ -1,11 +1,22 @@
 const express = require("express");
 const router = express.Router();
 
-const { vendorProfileController } = require("../../../controllers/vendor");
+const { vendorController } = require("../../../controllers");
+const { authMiddleware } = require("../../../middlewares");
 
-router.get("/dummy", vendorProfileController.dummy);
-router.get("/view/:id", vendorProfileController.view);
-router.put("/update/:id", vendorProfileController.update);
-router.delete("/remove/:id", vendorProfileController.remove);
-
+router.get(
+  "/view",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorProfileController.view
+);
+router.put(
+  "/update",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorProfileController.update
+);
+router.delete(
+  "/remove",
+  authMiddleware.verifyJwtToken,
+  vendorController.vendorProfileController.remove
+);
 module.exports = router;

@@ -49,10 +49,11 @@ const VendorSchema = new mongoose.Schema(
     ],
     portfolio: [
       {
-        public_id: { type: String },
-        url: { type: String },
-        secure_url: { type: String },
-        format: { type: String },
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        date: { type: Date },
+        city: { type: String, required: true },
+        images: [String],
       },
     ],
     reviews: [
