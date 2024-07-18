@@ -5,20 +5,14 @@ const { verifyJwtToken } = require("../../../middlewares/auth.middleware");
 const router = express.Router();
 
 // router.get("/login", userController.userAuthController.login);
-router.get(
-  "/profile",
+router.post(
+  "/",
   verifyJwtToken,
-  userController.userProfileController.ViewProfile
+  userController.userNotificationController.AddNotification
 );
-router.put(
-  "/profile",
-  verifyJwtToken,
-  userController.userProfileController.UpdateProfile
-);
-
 router.get(
-  "/bookings",
+  "/",
   verifyJwtToken,
-  userController.userBookingController.GetUserBookings
+  userController.userNotificationController.GetUserNotification
 );
 module.exports = router;

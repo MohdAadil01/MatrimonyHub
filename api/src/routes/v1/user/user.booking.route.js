@@ -5,20 +5,17 @@ const { verifyJwtToken } = require("../../../middlewares/auth.middleware");
 const router = express.Router();
 
 // router.get("/login", userController.userAuthController.login);
-router.get(
-  "/profile",
+router.post(
+  "/",
   verifyJwtToken,
-  userController.userProfileController.ViewProfile
+  userController.userBookingController.AddBookings
 );
-router.put(
-  "/profile",
+router.delete(
+  "/:booking_id",
   verifyJwtToken,
-  userController.userProfileController.UpdateProfile
+  userController.userBookingController.DeleteBookings
 );
 
-router.get(
-  "/bookings",
-  verifyJwtToken,
-  userController.userBookingController.GetUserBookings
-);
+router.get("/", userController.userBookingController.GetBookings);
+
 module.exports = router;

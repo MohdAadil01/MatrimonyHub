@@ -1,6 +1,5 @@
 const createHttpError = require("http-errors");
 const path = require("path");
-const removePasswordField = require("../../utils/SanitizeUser");
 const { User } = require("../../models");
 const { FieldValidator } = require("../../utils");
 
@@ -8,7 +7,7 @@ const ViewProfile = async (req, res, next) => {
   try {
     const user = req.user; //User email
     // console.log(user);
-    var profile = await User.findOne({ email: user });
+    var profile = await User.findOne({ _id: user });
     return res.status(200).json(profile);
   } catch (error) {
     return next(createHttpError(400, "Error retrieving profile:" + error));
@@ -22,7 +21,7 @@ const UpdateProfile = async (req, res, next) => {
 
     const keys = Object.keys(req.body);
 
-    let profile = await User.findOne({ email: user });
+    let profile = await User.findOne({ _id: user });
 
     keys.forEach((key) => {
       if (key == "name") {
@@ -53,7 +52,7 @@ const UpdateProfile = async (req, res, next) => {
       }
     });
     // console.log(profile);
-    await User.updateOne({ email: user }, profile, { upsert: true });
+    await User.updateOne({ _id: user }, profile, { upsert: true });
     return res.status(200).json({ message: "Profile Updated", user: profile });
   } catch (error) {
     return next(createHttpError(400, "Error updating profile:" + error));

@@ -21,7 +21,7 @@ const ServiceSchema = new mongoose.Schema(
     },
     availability: {
       type: String,
-      enum: ["booked", "available"],
+      enum: ["booked", "available", "unavailable"],
       default: "available",
       required: true,
     },
