@@ -60,7 +60,7 @@ const register = async (req, res, next) => {
       phone,
     });
     await user.save();
-    const token = await authMiddleware.generateJwtToken(email, next);
+    const token = await authMiddleware.generateJwtToken(user._id, next);
     res.status(200).json({ message: "Registered new user.", user, token });
   } catch (error) {
     return next(createHttpError(400, "Error in registering user. " + error));
@@ -84,7 +84,10 @@ const login = async (req, res, next) => {
     }else{
       
     }
-    const token = await authMiddleware.generateJwtToken(email, next);
+    const token = await authMiddleware.generateJwtToken(
+      userAlreadyExists._id,
+      next
+    );
 
     res.status(200).json({
       message: "Signed in",

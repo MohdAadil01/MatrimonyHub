@@ -1,3 +1,5 @@
+**MESSAGE**:::::::**Financial, preformance, support, notification and message API for admin will be create later**
+
 **Basic structure for all roles(User, Vendor and admin)**
 
 ### User Functionalities and Corresponding APIs
@@ -194,34 +196,37 @@
 
 #### Admin Authentication and Authorization API
 
-1. **Login**: POST /api/admin/login
-2. **Logout**: POST /api/admin/logout
+1. **Login**: POST /api/v1/admin/login
+2. **Logout**: POST /api/v1/admin/logout
 
 #### User Management API
 
-1. **View All Users**: GET /api/admin/users
+1. **View All Users**: GET /api/v1/admin/users
+3. **Update User**: PUT /api/v1/admin/users/{user_id}
+4. **Delete User**: DELETE /api/v1/admin/users/{user_id}
 
 #### Vendor Management API
 
-1. **View All Vendors**: GET /api/admin/vendors
-2. **Add Vendor**: POST /api/admin/vendors
-3. **Remove Vendor**: DELETE /api/admin/vendors/{vendor_id}
+1. **View All Vendors**: GET /api/v1/admin/vendors/getVendors
+2. **Add Vendor**: POST /api/v1/admin/vendors/addvendors
+3. **Remove Vendor**: DELETE /api/v1/admin/vendors/deletevendor/{vendor_id}
 
 #### Vendor Service Management API
 
-1. **Add Vendor Service**: POST /api/admin/vendors/{vendor_id}/services
-2. **Update Vendor Service**: PUT /api/admin/vendors/{vendor_id}/services/{service_id}
-3. **Delete Vendor Service**: DELETE /api/admin/vendors/{vendor_id}/services/{service_id}
+1. **Add Vendor Service**: POST /api/v1/admin/vendors/{vendor_id}/addservice
+2. **Update Vendor Service**: PUT /api/v1/admin/vendors/{service_id}/updateservice
+3. **Delete Vendor Service**: DELETE /api/v1/admin/vendors/{service_id}/deleteservice
 
 #### Review Management API
 
-1. **View User Reviews for Vendors**: GET /api/admin/vendors/{vendor_id}/reviews
+1. **View User Reviews for Vendors**: GET /api/v1/admin/reviews/{vendor_id}/getreviews
+4. **Delete Review**: DELETE /api/v1/admin/reviews/{vendor_id}/deletereview/{review_id}
 
 #### Booking Management API
 
-1. **View All Bookings**: GET /api/admin/bookings
-2. **Update Booking**: PUT /api/admin/bookings/{booking_id}
-3. **Delete Booking**: DELETE /api/admin/bookings/{booking_id}
+1. **View All Bookings**: GET /api/v1/admin/booking/viewbookings
+2. **Update Booking**: PUT /api/v1/admin/booking/{booking_id}/updatestatus
+3. **Delete Booking**: DELETE /api/v1/admin/bookings/{booking_id}/deletebooking
 
 #### Financial Management API
 

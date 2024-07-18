@@ -1,7 +1,16 @@
 const express = require("express");
-// !USER ROUTES
-const { userAuthRoute, userProfileRoute } = require("./user");
 
+// !USER ROUTES
+const {
+  userAuthRoute,
+  userProfileRoute,
+  userServiceRoute,
+  userVendorRoute,
+  userBookingROute,
+  userReviewRoute,
+  userNotificationRoute,
+  userPaymentRoute,
+} = require("./user");
 // !VENDORS ROUTES
 const {
   vendorAuthRoute,
@@ -16,8 +25,10 @@ const {
   adminAuthRoute,
   adminUserfunctionRoute,
   adminVendorfunctionRoute,
+  adminReviewsfunctionRoute,
+  adminBookingfunctionRoute,
 } = require("./admin");
-const { path } = require("./vendor/portfolio.vendor.route");
+
 const router = express.Router();
 
 const defaultRoutes = [
@@ -29,6 +40,30 @@ const defaultRoutes = [
   {
     path: "/user",
     route: userProfileRoute,
+  },
+  {
+    path: "/services",
+    route: userServiceRoute,
+  },
+  {
+    path: "/vendors",
+    route: userVendorRoute,
+  },
+  {
+    path: "/bookings",
+    route: userBookingROute,
+  },
+  {
+    path: "/reviews",
+    route: userReviewRoute,
+  },
+  {
+    path: "/notifications",
+    route: userNotificationRoute,
+  },
+  {
+    path: "/payment",
+    route: userPaymentRoute,
   },
 
   // !VENDOR ROUTES STARTS HERE
@@ -64,6 +99,14 @@ const defaultRoutes = [
   {
     path: "/admin/vendors",
     route: adminVendorfunctionRoute,
+  },
+  {
+    path: "/admin/reviews",
+    route: adminReviewsfunctionRoute,
+  },
+  {
+    path: "/admin/booking",
+    route: adminBookingfunctionRoute,
   },
 ];
 
