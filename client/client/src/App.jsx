@@ -1,14 +1,25 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
+import Login from './user/auth/Login'
+import Home from './components/Home';
+import Register from './user/auth/Register';
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <div className='flex justify-center items-center bg-red-50'>Home  page</div>
+    <BrowserRouter>
+    <Routes>
+    <Route path='/' element={<Home/>} />
+    <Route path='/login' element={<Login/>} />
+    <Route path='/register' element={<Register /> } />
+    </Routes>
+    
+    
+    </BrowserRouter> 
+    
     </>
   )
 }
