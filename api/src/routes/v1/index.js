@@ -1,4 +1,6 @@
 const express = require("express");
+
+// !USER ROUTES
 const {
   userAuthRoute,
   userProfileRoute,
@@ -9,23 +11,31 @@ const {
   userNotificationRoute,
   userPaymentRoute,
 } = require("./user");
-const { vendorAuthRoute } = require("./vendor");
-const { adminAuthRoute } = require("./admin");
+// !VENDORS ROUTES
+const {
+  vendorAuthRoute,
+  vendorProfileRoute,
+  vendorServiceRoute,
+  vendorPortfolioRoute,
+  vendorBookingRoute,
+} = require("./vendor");
+
+// !ADMING ROUTES
+const {
+  adminAuthRoute,
+  adminUserfunctionRoute,
+  adminVendorfunctionRoute,
+  adminReviewsfunctionRoute,
+  adminBookingfunctionRoute,
+} = require("./admin");
 
 const router = express.Router();
 
 const defaultRoutes = [
+  // !USER ROUTES STARTS HERE
   {
     path: "/auth",
     route: userAuthRoute,
-  },
-  {
-    path: "/vendor/auth",
-    route: vendorAuthRoute,
-  },
-  {
-    path: "/admin",
-    route: adminAuthRoute,
   },
   {
     path: "/user",
@@ -54,6 +64,49 @@ const defaultRoutes = [
   {
     path: "/payment",
     route: userPaymentRoute,
+  },
+
+  // !VENDOR ROUTES STARTS HERE
+  {
+    path: "/vendor/auth",
+    route: vendorAuthRoute,
+  },
+  {
+    path: "/vendor/profile",
+    route: vendorProfileRoute,
+  },
+  {
+    path: "/vendor/service",
+    route: vendorServiceRoute,
+  },
+  {
+    path: "/vendor/portfolio",
+    route: vendorPortfolioRoute,
+  },
+  {
+    path: "/vendor/booking",
+    route: vendorBookingRoute,
+  },
+  // !ADMIN ROUTES STARTS HERE
+  {
+    path: "/admin/auth",
+    route: adminAuthRoute,
+  },
+  {
+    path: "/admin/users",
+    route: adminUserfunctionRoute,
+  },
+  {
+    path: "/admin/vendors",
+    route: adminVendorfunctionRoute,
+  },
+  {
+    path: "/admin/reviews",
+    route: adminReviewsfunctionRoute,
+  },
+  {
+    path: "/admin/booking",
+    route: adminBookingfunctionRoute,
   },
 ];
 

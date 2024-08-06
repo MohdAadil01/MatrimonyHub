@@ -23,4 +23,4 @@ const CartSchema = new mongoose.Schema(
 );
 
 const Cart = mongoose.model("Cart", CartSchema);
-module.exports = Wishlist;
+module.exports = Cart;

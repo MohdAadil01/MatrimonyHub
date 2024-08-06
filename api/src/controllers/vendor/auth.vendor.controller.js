@@ -2,7 +2,7 @@ const createHttpError = require("http-errors");
 
 const { Vendor } = require("../../models");
 const { authMiddleware } = require("../../middlewares");
-const { processAndUploadFile, FieldValidator } = require("../../utils");
+const { FieldValidator } = require("../../utils");
 
 // vendor auth goes here
 const dummy = async (req, res) => {
@@ -12,44 +12,31 @@ const dummy = async (req, res) => {
 const register = async (req, res, next) => {
   const { businessName, email, phone, password, address } = req.body;
 
-  // !CHECKING VALIDATION OF ALL FILEDS
+  // !CHECKING VALIDATION OF ALL FIELDS
   if (!businessName || !email || !phone || !password || !address) {
-    return next(createHttpError(500, "Please enter all the required fields"));
+    return next(createHttpError(400, "Please enter all the required fields"));
   }
   if (!FieldValidator.emailValidation(email)) {
-    return next(createHttpError(400, "Please enter valid email"));
+    return next(createHttpError(400, "Please enter a valid email"));
   }
   if (!FieldValidator.phoneValidation(phone)) {
-    return next(createHttpError(400, "Please enter valid phone"));
+    return next(createHttpError(400, "Please enter a valid phone number"));
   }
   if (!FieldValidator.passwordValidation(password)) {
     return next(
-      createHttpError(400, "Password should be greater than 6 character.")
+      createHttpError(400, "Password should be greater than 6 characters.")
     );
   }
 
-  // ! CHECKING WHETHER IT ALREADY EXIST OF NOT
+  // ! CHECKING WHETHER IT ALREADY EXISTS OR NOT
   try {
     const isExist = await Vendor.findOne({ email: email });
     if (isExist) {
-      return next(500, "Vendor already exists, please login.");
+      return next(createHttpError(409, "Vendor already exists, please login."));
     }
   } catch (error) {
     return next(
       createHttpError(500, "Error in finding vendor in existing database.")
-    );
-  }
-
-  // !UPLOADING FILES TO CLOUD
-  let uploadResult;
-  try {
-    uploadResult = await processAndUploadFile.uploadMultipleFiles(req.files);
-  } catch (error) {
-    return next(
-      createHttpError(
-        500,
-        "Error while uploading files to cloud in vendor registration."
-      )
     );
   }
 
@@ -61,44 +48,43 @@ const register = async (req, res, next) => {
       phone,
       password,
       address,
-      portfolio: uploadResult,
     });
 
-    const token = await authMiddleware.generateJwtToken(email);
+    const token = await authMiddleware.generateJwtToken(vendor._id);
 
-    res.status(200).json({
+    res.status(201).json({
       message: "Successfully registered vendor.",
       vendor,
       token,
     });
   } catch (error) {
-    return next(createHttpError(500, "Error while registering in vendor."));
+    return next(createHttpError(500, "Error while registering vendor."));
   }
 };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  // !CHECKING VALIDATION OF ALL FILEDS
+  // !CHECKING VALIDATION OF ALL FIELDS
   if (!email || !password) {
     return next(createHttpError(400, "Please enter all the required fields"));
   }
   if (!FieldValidator.emailValidation(email)) {
-    return next(createHttpError(400, "Please enter valid email"));
+    return next(createHttpError(400, "Please enter a valid email"));
   }
 
-  // ! CHECKING WHETHER IT ALREADY EXIST OF NOT
+  // ! CHECKING WHETHER IT ALREADY EXISTS OR NOT
   try {
     const vendor = await Vendor.findOne({ email: email });
     if (!vendor) {
       return next(
-        createHttpError(400, "Vendor does not exists, please register first.")
+        createHttpError(404, "Vendor does not exist, please register first.")
       );
     }
     if (vendor.password !== password) {
-      return next(createHttpError(400, "Invalid Credentials."));
+      return next(createHttpError(401, "Invalid credentials."));
     }
-    const token = await authMiddleware.generateJwtToken(email);
+    const token = await authMiddleware.generateJwtToken(vendor._id);
 
     res.status(200).json({
       message: "Successfully logged in vendor.",
@@ -106,14 +92,7 @@ const login = async (req, res, next) => {
       token,
     });
   } catch (error) {
-    return next(createHttpError(500, "Error in login in vendor."));
-  }
-};
-
-const logout = async (req, res, next) => {
-  try {
-  } catch (error) {
-    return next(createHttpError(500, "Error while loging out vendor."));
+    return next(createHttpError(500, "Error in logging in vendor."));
   }
 };
 
@@ -121,5 +100,4 @@ module.exports = {
   dummy,
   register,
   login,
-  logout,
 };

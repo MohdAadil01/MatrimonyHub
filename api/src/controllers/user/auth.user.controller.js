@@ -56,7 +56,7 @@ const register = async (req, res, next) => {
     const user = await User({
       email,
       password,
-      name,
+      name, 
       phone,
     });
     await user.save();
@@ -81,6 +81,8 @@ const login = async (req, res, next) => {
       return next(
         createHttpError(400, "User does not exists. Please Register first.")
       );
+    }else{
+      
     }
     const token = await authMiddleware.generateJwtToken(
       userAlreadyExists._id,

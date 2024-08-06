@@ -20,8 +20,26 @@ const VendorSchema = new mongoose.Schema(
       required: true,
     },
     address: {
-      type: String,
-      required: true,
+      street: {
+        type: String,
+        required: true,
+      },
+      city: {
+        type: String,
+        required: true,
+      },
+      state: {
+        type: String,
+        required: true,
+      },
+      zip: {
+        type: String,
+        required: true,
+      },
+      country: {
+        type: String,
+        required: true,
+      },
     },
     services: [
       {
@@ -31,10 +49,11 @@ const VendorSchema = new mongoose.Schema(
     ],
     portfolio: [
       {
-        public_id: { type: String },
-        url: { type: String },
-        secure_url: { type: String },
-        format: { type: String },
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        date: { type: Date },
+        city: { type: String, required: true },
+        images: [String],
       },
     ],
     reviews: [

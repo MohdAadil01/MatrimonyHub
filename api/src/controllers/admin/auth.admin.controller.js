@@ -5,274 +5,93 @@ const { authMiddleware } = require("../../middlewares");
 const { User } = require("../../models");
 const { Service } = require("../../models");
 const { Vendor } = require("../../models");
+const { Admin } = require("../../models");
 
 const dummy = (req, res) => {
   res.send("Working route on the above url");
 };
 
-/****************USER CONTROLS****************/
+/************ADMIN LOGIN AND REGISTER************/
 
-// fetch all users by admin
-const fetchAllUsers = async (req, res, next) => {
+const registerAdmin = async (req, res, next) => {
+  const { name, email, password } = req.body;
   try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    return next(createHttpError(400, "Error in fetching users. " + error));
-  }
-};
-
-//Create new user by admin
-const createUserByAdmin = async (req, res, next) => {
-  const { email, password, firstName, lastName, phone, role } = req.body;
-  try {
-    if (!email || !password || !firstName || !lastName || !phone || !role) {
-      return next(createHttpError(400, "Please enter all fields."));
+    //!CHECKING WHETHER ALL THE REQUIRED FIELDS ARE FILLED
+    if (!email || !password || !name) {
+      return next(createHttpError(400, "Please Enter all fields."));
     }
 
+    // !CHECKING VALIDATION OF ALL THE FILEDS
     if (!FieldValidator.emailValidation(email)) {
-      return next(createHttpError(500, "Enter a valid email."));
+      return next(createHttpError(500, "Enter valid email."));
     }
     if (!FieldValidator.passwordValidation(password)) {
       return next(
-        createHttpError(500, "Password must be more than 6 characters.")
+        createHttpError(500, "Password must be more than 6 character.")
       );
     }
-    if (!FieldValidator.nameValidation(firstName, lastName)) {
-      return next(createHttpError(500, "Enter a valid name."));
+    if (!FieldValidator.nameValidation(name)) {
+      return next(createHttpError(500, "Enter valid Name."));
     }
-    if (!FieldValidator.phoneValidation(phone)) {
-      return next(createHttpError(500, "Enter a valid phone number."));
+    
+
+    //!CHECKING WHETHER THE USER ALREADY EXIST OR NOT
+    const adminAlreadyExists = await Admin.findOne({ email });
+    if (adminAlreadyExists) {
+      return next(createHttpError(400, "Admin already exists"));
     }
 
-    const userAlreadyExists = await User.findOne({ email });
-    if (userAlreadyExists) {
-      return next(createHttpError(400, "User already exists."));
-    }
-
-    const user = new User({
+    // !CREATE NEW USER
+    const admin = await Admin({
       email,
       password,
-      firstName,
-      lastName,
-      phone,
-      role,
+      name
     });
-    await user.save();
-    res.status(200).json({ message: "User created by admin.", user });
+    await admin.save();
+    const token = await authMiddleware.generateJwtToken(email, next);
+    res.status(200).json({ message: "Registered new Admin.", admin, token });
   } catch (error) {
-    return next(
-      createHttpError(400, "Error in creating user by admin. " + error)
-    );
+    return next(createHttpError(400, "Error in registering Admin. " + error));
   }
 };
 
-//update a particular user by admin
-
-const updateUserByAdmin = async (req, res, next) => {
-  const { id } = req.params;
-  const { email, firstName, lastName, phone, role } = req.body;
+const loginAdmin = async (req, res, next) => {
+  const { email, password } = req.body;
   try {
-    if (!email || !firstName || !lastName || !phone || !role) {
-      return next(createHttpError(400, "Please enter all fields."));
+    //!CHECKING WHETHER ALL THE REQUIRED FIELDS ARE FILLED
+    if (!email || !password) {
+      return next(createHttpError(400, "Please Enter all fields."));
     }
 
-    if (!FieldValidator.emailValidation(email)) {
-      return next(createHttpError(500, "Enter a valid email."));
+    // !CHECKING WHETHER USER EXISIT OR NOT
+    const adminAlreadyExists = await Admin.findOne({ email });
+    if (!adminAlreadyExists) {
+      return next(
+        createHttpError(400, "Admin does not exists. Please Register first.")
+      );
     }
-    if (!FieldValidator.nameValidation(firstName, lastName)) {
-      return next(createHttpError(500, "Enter a valid name."));
+    //CHECKING PASSWORD
+    if (password !== adminAlreadyExists.password) {
+      return next(createHttpError(400, "Invalid Password."));
     }
-    if (!FieldValidator.phoneValidation(phone)) {
-      return next(createHttpError(500, "Enter a valid phone number."));
-    }
+    const token = await authMiddleware.generateJwtToken(email, next);
 
-    const user = await User.findById(id);
-    if (!user) {
-      return next(createHttpError(404, "User not found."));
-    }
-
-    user.email = email;
-    user.firstName = firstName;
-    user.lastName = lastName;
-    user.phone = phone;
-    user.role = role;
-
-    await user.save();
-    res.status(200).json({ message: "User updated by admin.", user });
-  } catch (error) {
-    return next(
-      createHttpError(400, "Error in updating user by admin. " + error)
-    );
-  }
-};
-
-//delete users by admin
-
-const deleteUserByAdmin = async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-      return next(createHttpError(404, "User not found."));
-    }
-    res.status(200).json({ message: "User deleted by admin.", user });
-  } catch (error) {
-    return next(
-      createHttpError(400, "Error in deleting user by admin. " + error)
-    );
-  }
-};
-
-/**************SERVICES CONTROLS****************/
-
-// Fetch all services
-const fetchAllServices = async (req, res, next) => {
-  try {
-    const services = await Service.find().populate("vendor_id", "name");
-    res
-      .status(200)
-      .json({ message: "All services fetched successfully.", services });
-  } catch (error) {
-    return next(createHttpError(500, "Error in fetching services. " + error));
-  }
-};
-
-// Create a new service by admin
-const createServiceByAdmin = async (req, res, next) => {
-  const {
-    vendor_id,
-    title,
-    description,
-    price,
-    availability,
-    serviceType,
-    imageUrl,
-  } = req.body;
-  try {
-    if (
-      !vendor_id ||
-      !title ||
-      !description ||
-      !price ||
-      !availability ||
-      !serviceType ||
-      !imageUrl
-    ) {
-      return next(createHttpError(400, "Please enter all fields."));
-    }
-
-    const vendor = await Vendor.findById(vendor_id);
-    if (!vendor) {
-      return next(createHttpError(404, "Vendor not found."));
-    }
-    if (!FieldValidator.priceValidation(price)) {
-      return next(createHttpError(500, "Enter a valid price."));
-    }
-
-    const service = new Service({
-      vendor_id,
-      title,
-      description,
-      price,
-      availability,
-      serviceType,
-      imageUrl,
+    res.status(200).json({
+      message: "Signed in",
+      user: adminAlreadyExists,
+      token,
     });
-
-    await service.save();
-    res.status(201).json({ message: "Service created by admin.", service });
   } catch (error) {
-    return next(
-      createHttpError(400, "Error in creating service by admin. " + error)
-    );
+    return next(createHttpError(400, "Error in signing in Admin. " + error));
   }
 };
 
-// Update a service by admin
-const updateServiceByAdmin = async (req, res, next) => {
-  const { id } = req.params;
-  const {
-    vendor_id,
-    title,
-    description,
-    price,
-    availability,
-    serviceType,
-    imageUrl,
-  } = req.body;
 
-  try {
-    // Check if all fields are provided
-    if (
-      !vendor_id ||
-      !title ||
-      !description ||
-      !price ||
-      !availability ||
-      !serviceType ||
-      !imageUrl
-    ) {
-      return next(createHttpError(400, "Please enter all fields."));
-    }
 
-    // Validate vendor_id
-    const vendor = await Vendor.findById(vendor_id);
-    if (!vendor) {
-      return next(createHttpError(404, "Vendor not found."));
-    }
 
-    // Validate fields
-    if (!FieldValidator.priceValidation(price)) {
-      return next(createHttpError(500, "Enter a valid price."));
-    }
-
-    const service = await Service.findById(id);
-    if (!service) {
-      return next(createHttpError(404, "Service not found."));
-    }
-
-    // Update service fields
-    service.vendor_id = vendor_id;
-    service.title = title;
-    service.description = description;
-    service.price = price;
-    service.availability = availability;
-    service.serviceType = serviceType;
-    service.imageUrl = imageUrl;
-
-    await service.save();
-    res.status(200).json({ message: "Service updated by admin.", service });
-  } catch (error) {
-    return next(
-      createHttpError(400, "Error in updating service by admin. " + error)
-    );
-  }
-};
-
-// Delete a service by admin
-const deleteServiceByAdmin = async (req, res, next) => {
-  const { id } = req.params;
-
-  try {
-    const service = await Service.findByIdAndDelete(id);
-    if (!service) {
-      return next(createHttpError(404, "Service not found."));
-    }
-    res.status(200).json({ message: "Service deleted successfully.", service });
-  } catch (error) {
-    return next(createHttpError(500, "Error in deleting service. " + error));
-  }
-};
 
 module.exports = {
   dummy,
-  fetchAllUsers,
-  createUserByAdmin,
-  updateUserByAdmin,
-  deleteUserByAdmin,
-  fetchAllServices,
-  createServiceByAdmin,
-  updateServiceByAdmin,
-  deleteServiceByAdmin,
+  registerAdmin,
+  loginAdmin
 };
