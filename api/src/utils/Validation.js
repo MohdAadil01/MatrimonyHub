@@ -8,8 +8,8 @@ const passwordValidation = (password) => {
 };
 
 const nameValidation = (name) => {
-  const nameRegex = /^[A-Za-z]+$/;
-  return nameRegex.test(name);
+  const nameRegex = /^[A-Za-z\s]+$/;
+  return nameRegex.test(name.trim());
 };
 
 const phoneValidation = (phone) => {
