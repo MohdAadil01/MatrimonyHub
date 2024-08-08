@@ -1,61 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Filters from "./Filters";
 
 const ServiceList = () => {
-  const services = [
-    {
-      id: 1,
-      name: "Catering Service A",
-      type: "Catering",
-      price: 1500,
-      availability: "Available",
-      rating: 5,
-      description:
-        "Professional catering service offering a variety of gourmet dishes.",
-      image:
-        "https://culinaryaffaire.com/wp-content/uploads/2021/08/Best-Corporate-Catering-Service.jpg",
-    },
-    {
-      id: 2,
-      name: "Photography Service B",
-      type: "Photography",
-      price: 1200,
-      availability: "Booked",
-      rating: 4,
-      description:
-        "Expert photography service specializing in weddings and events.",
-      image:
-        "https://tse2.mm.bing.net/th?id=OIP.qJ84Zjn3T7FJzm1QJ_4i0gHaE8&pid=Api&P=0&h=180",
-    },
-    {
-      id: 3,
-      name: "Florist Service C",
-      type: "Florist",
-      price: 800,
-      availability: "Unavailable",
-      rating: 3,
-      description:
-        "Creative florist providing beautiful floral arrangements for all occasions.",
-      image:
-        "https://tse3.mm.bing.net/th?id=OIP.lmi-uUz-h4ns4e9_MP9q7QHaD8&pid=Api&P=0&h=180",
-    },
-    {
-      id: 4,
-      name: "Band Service D",
-      type: "Band",
-      price: 1800,
-      availability: "Available",
-      rating: 5,
-      description:
-        "Live band performance offering a wide range of musical genres.",
-      image:
-        "https://tse1.mm.bing.net/th?id=OIP.7NU82nsi3UmUNpP1GahYZgHaEK&pid=Api&P=0&h=180",
-    },
-    // Add more services as needed
-  ];
-
+  const [services, setServices] = useState([]);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [searchItem, setSearchItem] = useState("");
   const [filteredServices, setFilteredServices] = useState(services);
+
+  const fetchServices = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch("http://localhost:3000/api/v1/services");
+      if (!response.ok) {
+        setError("Error while loading services.");
+        setLoading(false);
+        return;
+      }
+      const json = await response.json();
+      setServices(json.data);
+    } catch (error) {
+      setError("Failed to fetch services.");
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   const handleInputChange = (e) => {
     const searchTerm = e.target.value;
@@ -70,7 +41,6 @@ const ServiceList = () => {
 
   const handleFilterChange = (filters) => {
     let updatedServices = services;
-
     if (filters.types.length > 0) {
       updatedServices = updatedServices.filter((service) =>
         filters.types.includes(service.type)
@@ -132,7 +102,7 @@ const ServiceList = () => {
         </div>
         <h2 className="text-xl font-semibold my-6">Service List</h2>
         <div className="grid gap-6">
-          {filteredServices.map((service) => (
+          {services?.map((service) => (
             <div
               key={service.id}
               className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg p-6"
