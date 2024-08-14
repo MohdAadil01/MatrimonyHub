@@ -8,5 +8,6 @@ router.get("/", userController.userServiceController.BrowseServices);
 router.post("/search", userController.userServiceController.SearchServices);
 
 router.post("/filter", userController.userServiceController.QueryService);
+router.get("/:id", userController.userServiceController.GetService);
 
 module.exports = router;

@@ -46,23 +46,13 @@ function Recipient({users,setUsers,selectedUser,setSelectedUser,socket}) {
 
 
       <div className='RB_RecipientList'>
-
-      <div className='RB_Recipient selected'>
-     <div className="RB_Recipient_inner"> <img src={Recipient_Image} alt='Recipient_Image' height='40' width='40'/>
-      <div className='RB_Recipient_Body'>
-        <p id='' className='Recipient_Name'>Dummy</p>
-        <p className='LastMsg'>last message...</p>
-    </div></div>
-    <img src={alertSVG} alt='Alert_Image' height='30' width='30' hidden/>
-
-    </div>
     
    
      
       <div className='RB_Recipient'>
      <div className="RB_Recipient_inner"> <img src={Recipient_Image} alt='Recipient_Image' height='40' width='40'/>
       <div className='RB_Recipient_Body'>
-        <p id='' className='Recipient_Name'>Dont Click Here</p>
+        <p id='' className='Recipient_Name' style={{fontSize:'larger',}}>Dont Click Here</p>
         <p className='LastMsg'>last message...</p>
     </div></div>
     <img src={alertSVG} alt='Alert_Image' height='30' width='30' hidden/>

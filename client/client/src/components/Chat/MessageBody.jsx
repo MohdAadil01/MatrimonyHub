@@ -95,4 +95,4 @@ function MessageBody({users,setUsers,selectedUser,setSelectedUser,socket}) {
   )
 }
 
-export default MessageBodya
+export default MessageBody

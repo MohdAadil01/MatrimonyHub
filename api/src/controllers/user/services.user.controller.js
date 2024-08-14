@@ -78,4 +78,21 @@ const QueryService = async (req, res, next) => {
   }
 };
 
-module.exports = { BrowseServices, SearchServices, QueryService };
+const GetService = async (req, res, next) => {
+  try {
+    if (!req.params.id) return next(createHttpError(400, "Invalid Parameters"));
+
+    const service = await Service.findById(req.params.id);
+
+    if (!service) return next(createHttpError(500, "Invalid Id"));
+
+    return res.status(200).json({
+      message: "Service Fetched successfully",
+      data: service,
+    });
+  } catch (error) {
+    return next(createHttpError(500, "Error Searching service:" + error));
+  }
+};
+
+module.exports = { BrowseServices, SearchServices, QueryService, GetService };

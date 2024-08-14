@@ -69,9 +69,10 @@ function Chat() {
         const usersData = [
           {
             userId: '1',
-            username: 'john_doe',
+            username: 'John Doe',
             connected: true,
             lastSeen: '2024-08-06T12:34:56Z',
+            lastMessage:'Last Message...',
             hasNewMessages: true,
             messages: [
               { content: 'Hey, how are you?', fromSelf: true },
@@ -82,10 +83,11 @@ function Chat() {
           },
           {
             userId: '2',
-            username: 'jane_smith',
+            username: 'Jane Smith',
             connected: false,
             lastSeen: '2024-08-06T11:20:45Z',
             hasNewMessages: false,
+            lastMessage:'Last Message...',
             messages: [
               { content: 'Hi John, did you finish the task?', fromSelf: false },
               { content: "Yes, I did. I'll send it over soon.", fromSelf: true },
