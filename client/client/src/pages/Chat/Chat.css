@@ -1,0 +1,162 @@
+
+
+
+.main-body{
+    display:flex;
+    flex-direction: row;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height:100vh;
+    width:100vw;
+}
+
+.RecipientBody{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    gap:2px;
+    width:400px;
+    height:100%;
+}
+
+.RB_Search{
+    display: flex;
+    flex-direction: row;
+    padding: 18px 30px 18px 30px;
+    justify-content: space-between;
+    border-bottom: 2px solid #F1F1F1;
+    border-right: 2px solid #F1F1F1;
+
+}
+
+.RB_Search>div{
+    display: flex;
+    gap:30px;
+    
+
+}
+.RB_Search img{
+    cursor: pointer;
+}
+
+.RB_RecipientList{
+    display: flex;
+    flex-direction: column;
+    gap:6px;
+    color: rgba(8, 8, 8, 0.8);
+    padding: 10px 10px 10px 10px;
+    
+
+}
+
+.selected{
+    background-color: #ECF5F9;
+    /* background-color: aqua; */
+}
+
+.RB_Recipient{
+    display: flex;
+    flex-direction: row;
+    /* background-color: aqua; */
+    gap: 10px;
+    padding: 10px 25px 10px 25px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+.RB_Recipient_inner{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.RB_Recipient_Body{
+    display: flex;
+    flex-direction: column;
+    gap:0px;
+    
+
+}
+.RB_Recipient_Body>.Recipient_Name{
+    
+font-weight:600;
+margin-bottom: -5px;
+}
+
+
+
+.Message_Body{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex:1;
+    justify-content: space-between;
+}
+.MB_Header{
+display: flex;
+background-color: white;
+padding: 10px 30px 10px 40px;
+gap:20px;
+align-items: center;
+font-size: large;
+
+}
+.MB_Footer{
+    display: flex;
+    background-color: white;
+    padding: 15px 40px 15px 20px;
+    justify-content:space-between;
+    box-shadow: 10px 4px 6px rgba(0, 0, 0, 0.6);
+    border-left: 2px solid #F1F1F1;
+    
+    
+}
+.MB_Footer>img{
+    cursor: pointer;
+}
+
+
+#MessageInput{
+    border-radius: 10px;
+    background-color:#ECF5F9;
+    width: 85%;
+    padding: 10px 20px 10px 20px;
+}
+.MB_TextHist {
+    /* height: 300px; */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+    flex:1;
+    display: flex;
+    flex-direction: column;
+    /* padding-bottom: 0; */
+    /* justify-content: flex-end; */
+    background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+  }
+  
+
+.message {
+    width: fit-content;
+    max-width: 70%;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    word-wrap: break-word;
+  }
+  
+  .message.fromSelf {
+    align-self: flex-end;
+    background-color: #dcf8c6; /* Light green background for user messages */
+    box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .message.fromOther {
+    align-self: flex-start;
+    background-color: #ffffff; /* White background for sender messages */
+    /* border: 1px solid #ccc; */
+    box-shadow: 2px 4px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+

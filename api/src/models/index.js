@@ -7,3 +7,4 @@ module.exports.Admin = require("./Admin.model");
 module.exports.Cart = require("./Cart.model");
 module.exports.Notification = require("./Notification.model");
 module.exports.Payment = require("./Payment.model");
+module.exports.Message = require("./Message.model");
