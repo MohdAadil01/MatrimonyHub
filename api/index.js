@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const { config } = require("dotenv");
 const routes = require("./src/routes/v1/index");
 const { ErrorHandler } = require("./src/utils");
@@ -10,6 +11,8 @@ const { createServer } = require("http");
 const setupSocketHandlers = require("./socketHandlers");
 
 const app = express();
+app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

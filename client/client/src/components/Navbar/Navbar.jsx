@@ -17,7 +17,7 @@ function Navbar() {
       {/* Services */}
       <div className="hidden md:flex space-x-8">
         <Link
-          to="/service1"
+          to="/services"
           className="px-5 py-3 rounded-xl text-sm font-medium text-indigo-600 bg-white border border-indigo-600 hover:bg-indigo-100 transition-all"
         >
           Our Services
